@@ -1,16 +1,26 @@
 import { ABOUT_VIRUS, GITHUB_URL } from './config.mjs';
-import { getLatestNews } from './news.mjs';
+import { getCoronaMeter, getLatestNews } from './data.mjs';
 import { getBot, shouldReply } from './utils.mjs';
 
 // get bot instant
 const bot = getBot();
 
-bot.onText(/\/hello/, msg => {
+bot.onText(/\/check/, msg => {
   if (shouldReply(msg)) {
-    bot.sendMessage(msg.chat.id, "Hello  " + msg.from.first_name);
-  }
- });
+    getCoronaMeter()
+      .then(result => {
+        if (!result) {
+          bot.sendMessage(msg.chat.id, 'Failed to get the information.');
+        } else {
+          let reply = `<b>Current Satistic Data</b>\n\n`;
+          reply += `<b>Cases</b>: ${result.cases}\n`;
+          reply += `<b>Deaths</b>: ${result.deaths}\n`;
 
+          bot.sendMessage(msg.chat.id, reply, {parse_mode : "HTML"});
+        }
+      })
+  }
+})
 
 bot.onText(/\/news/, msg => {
   const buildToMarkdown = news => {
@@ -38,7 +48,7 @@ bot.onText(/\/help/, msg => {
   if (shouldReply(msg)) {
     let reply = '';
     reply += '<i><b>/news</b></i> to get latest news about coronavirus\n';
-    reply += '<i><b>/count</b></i> to get the number of coronavirus cases\n\n';
+    reply += '<i><b>/check</b></i> to get the number of coronavirus cases\n\n';
     reply += `Learn more about <a href="${ABOUT_VIRUS}">Coronavirus</a>\n`;
     reply += `This bot is open source and can find the code on <a href="${GITHUB_URL}">Github</a>`;
 

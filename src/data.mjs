@@ -1,10 +1,45 @@
-import { NEWS_RSS } from './config.mjs';
+import { CORONA_METER, NEWS_RSS } from './config.mjs';
 import { isAboutVirus } from './utils.mjs';
 import Parser from 'rss-parser';
+import axios from 'axios';
+import cheerio from 'cheerio';
+
+import fs from 'fs';
 
 // rss parser
 const parser = new Parser();
 
+// Count
+const getCoronaMeter = async () => {
+  let response;
+  try {
+    response = await axios.get(CORONA_METER.url);
+    if (response.status !== 200) {
+      throw err;
+    }
+  } catch (err) {
+    return null;
+  }
+
+  // to store parsed data
+  const result = {};
+
+  // get HTML and parse
+  const html = cheerio.load(response.data)
+  html('.maincounter-number').filter((i, el) => {
+    let count = el.children[0].next.children[0].data;
+    // first one is 
+    if (i === 0) {
+      result.cases = count;
+    } else {
+      result.deaths = count;
+    }
+  });
+
+  return result;
+};
+
+// News
 const getAllNews = async () => {
   const news = [];
   for (let source in NEWS_RSS) {
@@ -33,4 +68,4 @@ const getLatestNews = async (offset=8) => {
   return news.slice(0, offset);
 };
 
-export { getAllNews, getLatestNews };
+export { getAllNews, getCoronaMeter, getLatestNews };

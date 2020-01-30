@@ -6,6 +6,11 @@ const USERNAME = 'coronaexe_bot';
 const ABOUT_VIRUS = 'https://www.who.int/health-topics/coronavirus';
 const GITHUB_URL = 'https://github.com/the-robot/corona-bot';
 
+// Numerical Data Source
+const CORONA_METER = {
+  url: 'https://www.worldometers.info/coronavirus/',
+};
+
 // News Sources
 const NEWS_RSS = {
   cna: {
@@ -30,4 +35,4 @@ const NEWS_RSS = {
   },
 };
 
-export { ABOUT_VIRUS, GITHUB_URL, NEWS_RSS, TOKEN, USERNAME };
+export { ABOUT_VIRUS, CORONA_METER, GITHUB_URL, NEWS_RSS, TOKEN, USERNAME };
