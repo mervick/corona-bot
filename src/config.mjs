@@ -18,10 +18,20 @@ const NEWS_RSS = {
     name: 'Channel News Asia',
     url: 'https://www.channelnewsasia.com/rssfeeds/8395986'
   },
+  cnn: {
+    id: 'CNN',
+    name: 'Cable News Network',
+    url: 'http://rss.cnn.com/rss/edition.rss',
+  },
   guardian: {
     id: 'Guardian',
     name: 'Guardian',
     url: 'https://www.theguardian.com/world/rss'
+  },
+  ny_times: {
+    id: 'New York Times',
+    name: 'New York Times',
+    url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
   },
   strait_times: {
     id: 'Strait Times',
