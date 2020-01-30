@@ -1,17 +1,18 @@
+import { ABOUT_VIRUS, GITHUB_URL } from './config.mjs';
 import { getLatestNews } from './news.mjs';
 import { getBot, shouldReply } from './utils.mjs';
 
 // get bot instant
 const bot = getBot();
 
-bot.onText(/\/hello/, (msg) => {
+bot.onText(/\/hello/, msg => {
   if (shouldReply(msg)) {
     bot.sendMessage(msg.chat.id, "Hello  " + msg.from.first_name);
   }
  });
 
 
-bot.onText(/\/news/, (msg) => {
+bot.onText(/\/news/, msg => {
   const buildToMarkdown = news => {
     let reply = `<b>Latest News</b>\n\n`;
     for (let i=0; i<news.length; i+=1) {
@@ -30,6 +31,18 @@ bot.onText(/\/news/, (msg) => {
           bot.sendMessage(msg.chat.id, 'No latest news at the moment.');
         }
       });
+  }
+});
+
+bot.onText(/\/help/, msg => {
+  if (shouldReply(msg)) {
+    let reply = '';
+    reply += '<i><b>/news</b></i> to get latest news about coronavirus\n';
+    reply += '<i><b>/count</b></i> to get the number of coronavirus cases\n\n';
+    reply += `Learn more about <a href="${ABOUT_VIRUS}">Coronavirus</a>\n`;
+    reply += `This bot is open source and can find the code on <a href="${GITHUB_URL}">Github</a>`;
+
+    bot.sendMessage(msg.chat.id, reply, {parse_mode: "HTML", disable_web_page_preview: true})
   }
 });
 

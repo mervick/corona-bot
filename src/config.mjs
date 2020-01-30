@@ -1,5 +1,10 @@
+// credentials
 const TOKEN = '';
 const USERNAME = 'coronaexe_bot';
+
+// extra info
+const ABOUT_VIRUS = 'https://www.who.int/health-topics/coronavirus';
+const GITHUB_URL = 'https://github.com/the-robot/corona-bot';
 
 // News Sources
 const NEWS_RSS = {
@@ -25,4 +30,4 @@ const NEWS_RSS = {
   },
 };
 
-export { NEWS_RSS, TOKEN, USERNAME };
+export { ABOUT_VIRUS, GITHUB_URL, NEWS_RSS, TOKEN, USERNAME };
