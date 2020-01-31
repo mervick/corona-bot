@@ -12,8 +12,7 @@ bot.onText(/\/check/, msg => {
         if (!result) {
           bot.sendMessage(msg.chat.id, 'Failed to get the information.');
         } else {
-          let reply = `<b>Current Satistic Data</b>\n`;
-          reply += `<b>Cases</b>: ${result.cases}\n`;
+          let reply = `<b>Cases</b>: ${result.cases}\n`;
           reply += `<b>Deaths</b>: ${result.deaths}\n`;
 
           bot.sendMessage(msg.chat.id, reply, {parse_mode : "HTML"});
