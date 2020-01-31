@@ -1,4 +1,4 @@
-import { TOKEN, USERNAME } from './config.mjs';
+import { TOKEN, BOT_USERNAME } from './config.mjs';
 import TelegramBot from 'node-telegram-bot-api';
 
 const getBot = () => {
@@ -16,7 +16,7 @@ const isAboutVirus = text => {
 
 const shouldReply = msg => {
   const isMentionedInGroup = msg => {
-    const pattern = new RegExp(`[@]${USERNAME}\\b`, 'g');
+    const pattern = new RegExp(`[@]${BOT_USERNAME}\\b`, 'g');
     return pattern.test(msg.text) && (msg.chat.type === 'group' || msg.chat.type === 'supergroup');
   };
 

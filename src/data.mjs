@@ -1,4 +1,4 @@
-import { CORONA_METER, NEWS_RSS, REDDIT_RSS } from './config.mjs';
+import { CORONA_METER, NEWS_RSS, REDDIT_RSS, TWITTER_RSS } from './config.mjs';
 import { isAboutVirus } from './utils.mjs';
 import Parser from 'rss-parser';
 import axios from 'axios';
@@ -59,7 +59,6 @@ const getCoronaCountries = async () => {
 
   return result;
 };
-getCoronaCountries().then(result => {console.log(result)});
 
 const getCoronaOverall = async () => {
   let response;
@@ -98,9 +97,15 @@ const getLatestNews = async (offset=10) => {
 };
 
 const getRedditPosts = async (offset=10) => {
-  const news = await getRssFeeds(REDDIT_RSS);
-  news.sort(sortArticleByLatest);
-  return news.slice(0, offset);
+  const posts = await getRssFeeds(REDDIT_RSS);
+  posts.sort(sortArticleByLatest);
+  return posts.slice(0, offset);
+};
+
+const getTwitterPosts = async (offset=10) => {
+  const posts = await getRssFeeds(TWITTER_RSS);
+  posts.sort(sortArticleByLatest);
+  return posts.slice(0, offset);
 };
 
 // RSS parser
@@ -129,4 +134,4 @@ const sortArticleByLatest = (a, b) => {
   return 0;
 };
 
-export { getCoronaCountries, getCoronaOverall, getLatestNews, getRedditPosts };
+export { getCoronaCountries, getCoronaOverall, getLatestNews, getRedditPosts, getTwitterPosts };

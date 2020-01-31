@@ -1,6 +1,6 @@
 // credentials
 const TOKEN = '';
-const USERNAME = 'coronaexe_bot';
+const BOT_USERNAME = 'coronaexe_bot';
 
 // extra info
 const ABOUT_VIRUS = 'https://www.who.int/health-topics/coronavirus';
@@ -99,4 +99,14 @@ const REDDIT_RSS = {
   },
 };
 
-export { ABOUT_VIRUS, CORONA_METER, GITHUB_URL, NEWS_RSS, REDDIT_RSS, TOKEN, USERNAME };
+// Twitter username
+const TWITTER_RSS = {
+  wuhanvirus: {
+    id: '@thewuhanvirus',
+    name: 'the_wuhan_virus',
+    url: 'https://twitrss.me/twitter_user_to_rss/?user=thewuhanvirus',
+  },
+};
+
+export { ABOUT_VIRUS, BOT_USERNAME, CORONA_METER, GITHUB_URL, NEWS_RSS, REDDIT_RSS, TOKEN, TWITTER_RSS };
+

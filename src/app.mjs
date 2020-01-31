@@ -1,5 +1,5 @@
 import { ABOUT_VIRUS, GITHUB_URL } from './config.mjs';
-import { getCoronaCountries, getCoronaOverall, getLatestNews, getRedditPosts } from './data.mjs';
+import { getCoronaCountries, getCoronaOverall, getLatestNews, getRedditPosts, getTwitterPosts } from './data.mjs';
 import { getBot, shouldReply } from './utils.mjs';
 
 // get bot instant
@@ -90,12 +90,34 @@ bot.onText(/\/reddit/, msg => {
   }
 });
 
+bot.onText(/\/tweets/, msg => {
+  const buildInHtml = posts => {
+    let reply = `<b>Tweets</b>\n\n`;
+    for (let i=0; i<posts.length; i+=1) {
+      reply += `${i+1}. <a href="${posts[i].link}">${posts[i].title}</a> <code>(${posts[i].article_source.id})</code>\n\n`;
+    }
+    return reply;
+  };
+
+  if (shouldReply(msg)) {
+    getTwitterPosts()
+      .then(posts => {
+        if (posts.length > 0) {
+          bot.sendMessage(msg.chat.id, buildInHtml(posts), {parse_mode : "HTML", disable_web_page_preview: true});
+        } else {
+          bot.sendMessage(msg.chat.id, 'No latest tweets at the moment.');
+        }
+      });
+  }
+});
+
 // Intro and Help
 bot.onText(/\/start/, msg => {
   if (shouldReply(msg)) {
     let reply = 'Welcome, you can ask me to get latest news and information about coronavirus. See the commands below.\n\n';
     reply += '<i><b>/news</b></i> to get latest news about coronavirus\n';
     reply += '<i><b>/reddit</b></i> to get latest posts about coronavirus from reddit\n';
+    reply += '<i><b>/tweets</b></i> to get latest tweets about coronavirus from twitter\n';
     reply += '<i><b>/check</b></i> to get the number of coronavirus cases\n';
     reply += '<i><b>/stats</b></i> to get the number of cases in infected countries\n\n';
     reply += `Learn more about <a href="${ABOUT_VIRUS}">Coronavirus</a>\n`;
@@ -110,6 +132,7 @@ bot.onText(/\/help/, msg => {
     let reply = '';
     reply += '<i><b>/news</b></i> to get latest news about coronavirus\n';
     reply += '<i><b>/reddit</b></i> to get latest posts about coronavirus from reddit\n';
+    reply += '<i><b>/tweets</b></i> to get latest tweets about coronavirus from twitter\n';
     reply += '<i><b>/check</b></i> to get the number of coronavirus cases\n';
     reply += '<i><b>/stats</b></i> to get the number of cases in infected countries\n\n';
     reply += `Learn more about <a href="${ABOUT_VIRUS}">Coronavirus</a>\n`;
