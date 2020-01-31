@@ -10,6 +10,6 @@ Common signs of infection include respiratory symptoms, fever, cough, shortness 
 ---
 
 ### What is this bot?
-[Corona-bot](https://t.me/coronaexe_bot) is a telegram bot that can gives latest news and number of cases/deaths related to coronavirus.
+[Corona-bot](https://t.me/coronaexe_bot) `(coronaexe_bot)` is a telegram bot that can gives latest news and number of cases/deaths related to coronavirus.
 
 <img src="https://i.imgur.com/plz3FKA.jpg" alt="screenshot" width="300" height="600">
