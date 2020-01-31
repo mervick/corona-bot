@@ -1,4 +1,4 @@
-import { CORONA_METER, NEWS_RSS } from './config.mjs';
+import { CORONA_METER, NEWS_RSS, REDDIT_RSS } from './config.mjs';
 import { isAboutVirus } from './utils.mjs';
 import Parser from 'rss-parser';
 import axios from 'axios';
@@ -88,33 +88,43 @@ const getCoronaOverall = async () => {
   return result;
 };
 
-// News
-const getAllNews = async () => {
-  const news = [];
-  for (let source in NEWS_RSS) {
-    let feed = await parser.parseURL(NEWS_RSS[source].url);
-    feed.items.forEach(item => {
-      if (isAboutVirus(item.title) || isAboutVirus(item.link)) {
-        item.news_source = {
-          id: NEWS_RSS[source].id,
-          name: NEWS_RSS[source].name
-        };
-        news.push(item)
-      }
-    });
-  }
-  return news;
-};
-
-const getLatestNews = async (offset=8) => {
-  const news = await getAllNews();
-  const sortByLatest = (a, b) => {
-    if (a.isoDate > b.isoDate) return -1;
-    if (b.isoDate > a.isoDate) return 1;
-    return 0;
-  }
-  news.sort(sortByLatest);
+// RSS
+const getLatestNews = async (offset=10) => {
+  const news = await getRssFeeds(NEWS_RSS);
+  news.sort(sortArticleByLatest);
   return news.slice(0, offset);
 };
 
-export { getAllNews, getCoronaCountries, getCoronaOverall, getLatestNews };
+const getRedditPosts = async (offset=10) => {
+  const news = await getRssFeeds(REDDIT_RSS);
+  news.sort(sortArticleByLatest);
+  return news.slice(0, offset);
+};
+
+// RSS parser
+const getRssFeeds = async rss_sources => {
+  const articles = [];
+
+  for (let source in rss_sources) {
+    let feeds = await parser.parseURL(rss_sources[source].url);
+
+    feeds.items.forEach(item => {
+      if (isAboutVirus(item.title) || isAboutVirus(item.link)) {
+        item.article_source = {
+          id: rss_sources[source].id,
+          name: rss_sources[source].name
+        };
+        articles.push(item)
+      }
+    });
+  }
+  return articles;
+};
+
+const sortArticleByLatest = (a, b) => {
+  if (a.isoDate > b.isoDate) return -1;
+  if (b.isoDate > a.isoDate) return 1;
+  return 0;
+};
+
+export { getCoronaCountries, getCoronaOverall, getLatestNews, getRedditPosts };
