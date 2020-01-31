@@ -92,9 +92,9 @@ bot.onText(/\/reddit/, msg => {
 
 bot.onText(/\/tweets/, msg => {
   const buildInHtml = posts => {
-    let reply = `<b>Tweets</b>\n\n`;
+    let reply = `<b>Tweets from ${posts[0].article_source.id}</b>\n\n`;
     for (let i=0; i<posts.length; i+=1) {
-      reply += `${i+1}. <a href="${posts[i].link}">${posts[i].title}</a> <code>(${posts[i].article_source.id})</code>\n\n`;
+      reply += `${i+1}. <a href="${posts[i].link}">${posts[i].title}</a>\n\n`;
     }
     return reply;
   };
