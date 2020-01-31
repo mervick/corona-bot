@@ -38,11 +38,11 @@ const NEWS_RSS = {
     name: 'The Guardian',
     url: 'https://www.theguardian.com/world/rss'
   },
-  mail_online: {
-    id: 'Mail Online',
-    name: 'Mail Online',
-    url: 'https://www.dailymail.co.uk/articles.rss',
-  },
+//   mail_online: {
+//     id: 'Mail Online',
+//     name: 'Mail Online',
+//     url: 'https://www.dailymail.co.uk/articles.rss',
+//   },
   ny_times: {
     id: 'New York Times',
     name: 'New York Times',
