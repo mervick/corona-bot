@@ -50,6 +50,7 @@ const getCoronaCountries = async () => {
     // get region
     if (i % 4 === 3) {
       result[result.length-1].region = (
+        cell.children[0].data ||
         cell.children[0].children[0].data ||
         cell.children[0].children[0].children[0].data
       );
@@ -58,6 +59,7 @@ const getCoronaCountries = async () => {
 
   return result;
 };
+getCoronaCountries().then(result => {console.log(result)});
 
 const getCoronaOverall = async () => {
   let response;
